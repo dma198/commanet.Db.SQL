@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>Test</OutputType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
+    <PackageReference Include="Npgsql" Version="*" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="*" />
+    <PackageReference Include="System.Data.Odbc" Version="*" />
+    <PackageReference Include="System.Data.SqlClient" Version="*" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="*" />
+    <PackageReference Include="xUnit" Version="*" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Src/Commanet.Db.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestData\MWCONFIG.db3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
