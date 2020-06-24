@@ -15,7 +15,7 @@ namespace commanet.Db.Test
         {
             /*
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return;
-            var fname = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..", "..", "..", "TestData", "MWCONFIG.MDB"));
+            var fname = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..", "..", "..", "TestData", "TestData.MDB"));
 
             using (var db = new SQLDBConnection("odbc", "", "", @"Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + fname))
             {

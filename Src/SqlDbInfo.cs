@@ -10,54 +10,52 @@ namespace commanet.Db
 {
     public static class SqlDbInfo
     {
-        private static readonly List<SqlDbTypeInfo> infos = new List<SqlDbTypeInfo>();
-        static SqlDbInfo()
+        private static readonly List<SqlDbTypeInfo> infos = new List<SqlDbTypeInfo>()
         {
-            var di = new SqlDbTypeInfo()
+            new SqlDbTypeInfo()
             {
                 Type = SqlDbType.Oracle,
                 ADOProviderAssemblyName = "Oracle.ManagedDataAccess",
                 ADOProviderFactoryName = "Oracle.ManagedDataAccess.Client.OracleClientFactory",
                 PARAMSYMBOL = ":"
-            };
-            infos.Add(di);
-
-            di = new SqlDbTypeInfo()
+            },
+            new SqlDbTypeInfo()
             {
                 Type = SqlDbType.SqlServer,
                 ADOProviderAssemblyName = "System.Data.SqlClient",
                 ADOProviderFactoryName = "System.Data.SqlClient.SqlClientFactory",
                 PARAMSYMBOL = "@"
-            };
-            infos.Add(di);
-
-            di = new SqlDbTypeInfo()
+            },
+            new SqlDbTypeInfo()
             {
                 Type = SqlDbType.PostgreSQL,
                 ADOProviderAssemblyName = "Npgsql",
                 ADOProviderFactoryName = "Npgsql.NpgsqlFactory",
                 PARAMSYMBOL = ":"
-            };
-            infos.Add(di);
-
-            di = new SqlDbTypeInfo()
+            },
+            new SqlDbTypeInfo()
+            {
+                Type = SqlDbType.MySQL,
+                ADOProviderAssemblyName = "MySql.Data",
+                ADOProviderFactoryName = "MySql.Data.MySqlClient.MySqlClientFactory",
+                PARAMSYMBOL = "@"
+            },
+            new SqlDbTypeInfo()
             {
                 Type = SqlDbType.Sqlite,
                 ADOProviderAssemblyName = "System.Data.SQLite",
                 ADOProviderFactoryName = "System.Data.SQLite.SQLiteFactory",
                 PARAMSYMBOL = ":"
-            };
-            infos.Add(di);
-
-            di = new SqlDbTypeInfo()
+            },
+            new SqlDbTypeInfo()
             {
                 Type = SqlDbType.Odbc,
                 ADOProviderAssemblyName = "System.Data.Odbc",
                 ADOProviderFactoryName = "System.Data.Odbc.OdbcFactory",
                 PARAMSYMBOL = "@" // Not used for ODBC. Parameters identified only by position not by name
-            };
-            infos.Add(di);
-        }
+            }
+
+        };
 
         public static DbProviderFactory? GetDbProviderFactory(SqlDbTypeInfo typeInfo)
         {
@@ -174,6 +172,23 @@ NOTICE! Use Dot.Net Core compatible version of provider assemblies");
                         builder["Database"] = database;
                         return builder.ConnectionString;
                     }
+                case SqlDbType.MySQL:
+                    {
+                        builder["User ID"] = connectionInfo.DbUser;
+                        builder["Password"] = connectionInfo.DbPassword;                        
+                        builder["Pooling"] = connectionInfo.Pooling;
+
+                        var tmp = connectionInfo.DbConnectionString.Split(':');
+                        var host = tmp[0];
+                        var port = 3306;
+                        var database = "mysql";
+                        if (tmp.Length > 1) int.TryParse(tmp[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out port);
+                        if (tmp.Length > 2) database = tmp[2];
+                        builder["Server"] = host;
+                        builder["Port"] = port;
+                        builder["Database"] = database;
+                        return builder.ConnectionString;
+                    }                    
                 case SqlDbType.Sqlite:
                     {
                         var path = connectionInfo.DbConnectionString;

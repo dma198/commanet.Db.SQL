@@ -6,6 +6,7 @@ namespace commanet.Db
         SqlServer,
         Sqlite,
         PostgreSQL,
+        MySQL,
         Odbc
     }
 }

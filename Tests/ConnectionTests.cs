@@ -3,7 +3,8 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Xunit;
-
+using System.Data.Common;
+using MySql.Data.MySqlClient;
 using commanet.Db;
 
 namespace commanet.Db.Test
@@ -13,6 +14,7 @@ namespace commanet.Db.Test
         //private string OracleTestConnection = "Type=ORACLE;User=system;Password=manager;Connection=172.17.0.1:1521:ORCL";
         //private string SQLServerTestConnection = "Type=SqlServer;User=sa;Password=test;Connection=host";
         //private string PostgreSQLTestConnection = "Type=postgresql;User=postgres;Password=test;Connection=host";
+        //private string MySQLTestConnection = "Type=mysql;User=root;Password=passwd;Connection=localhost";
         private string SQLiteTestConnection = "Type=SQLite;Connection=:memory:";
 
         [Fact]
@@ -57,6 +59,19 @@ namespace commanet.Db.Test
             };
             */
         }
+
+        [Fact]
+        public void TestMySQLConnection()
+        {
+            /*
+            using (var db = new SQLDBConnection(MySQLTestConnection))
+            {
+                db.Open();
+                db.Close();
+            };
+            */
+            
+        }        
 
         [Fact]
         public void TestOdbcConnection()

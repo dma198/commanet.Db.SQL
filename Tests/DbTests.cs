@@ -13,6 +13,7 @@ namespace commanet.Db.Test
         //private string OracleTestConnection = "Type=ORACLE;User=system;Password=manager;Connection=172.17.0.1:1521:ORCL";
         //private string SQLServerTestConnection = "Type=SqlServer;User=sa;Password=test;Connection=host";
         //private string PostgreSQLTestConnection = "Type=postgresql;User=postgres;Password=test;Connection=host";
+        //private string MySQLTestConnection = "Type=mysql;User=root;Password=passwd;Connection=localhost";
         private string SQLiteTestConnection = "Type=SQLite;Connection=:memory:";
 
         [Fact]

@@ -11,6 +11,7 @@ namespace commanet.Db.Test
         //private string OracleTestConnection = "Type=ORACLE;User=system;Password=manager;Connection=172.17.0.1:1521:ORCL";
         //private string SQLServerTestConnection = "Type=SqlServer;User=sa;Password=test;Connection=host";
         //private string PostgreSQLTestConnection = "Type=postgresql;User=postgres;Password=test;Connection=host";
+        //private string MySQLTestConnection = "Type=mysql;User=root;Password=passwd;Connection=localhost";
         private string SQLiteTestConnection = "Type=SQLite;Connection=:memory:";
         [Fact]
         public void TestTransactionOracle()
@@ -77,6 +78,29 @@ namespace commanet.Db.Test
                 db.Close();
             };*/
         }
+
+
+        [Fact]
+        public void TestTransactionMySQL()
+        {
+            /*
+            using (var db = new SQLDBConnection(MySQLTestConnection))
+            {
+                db.Open();
+                db.Transaction((th) =>
+                {
+                    try { th.ExecuteNonQuery("DROP TABLE test"); } catch (Exception) { };
+                });
+                db.Transaction((th) => {
+                    th.ExecuteNonQuery("CREATE TABLE test(i INTEGER)");
+                    th.ExecuteNonQuery("INSERT INTO test(i) VALUES(1)");
+                    var v = db.ReadOneInt("SELECT COUNT(*) FROM test"); // Test Reader executed in transaction context
+                    th.ExecuteNonQuery("DROP TABLE test");
+                });
+                db.Close();
+            };*/
+        }        
+
         [Fact]
 
         public void TestTransactionSQLite()

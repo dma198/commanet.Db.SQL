@@ -27,7 +27,7 @@ var db = SQLDBConnection(DbTypeew SqlDbConnectionInfo()
 var db = new SQLDBConnection(FullConnectionString);
 
 ```
-**DbType**      : String value, one of: *ORACLE*,*SqlServer*,*PostgreSQL*,*SQLite*
+**DbType**      : String value, one of: *ORACLE*,*SqlServer*,*PostgreSQL*,*MySQL*,*SQLite*
 **DbConStr**    : Connection string. Format depends of DBMS Used
 
 **FullConnectionString**    : Contains *';'* separated key-value pairs in format *<key>=<value>*. Variable names (not case sensitive) are "Type", "User", "Password","Connection" and other matching with property names in SqlDbConnectionInfo type presented above.
@@ -40,9 +40,10 @@ To use particular database type will need to add to project dependencies related
 
 DB Type    | Required package              | Connection String Format
 -----------|-------------------------------|---------------------------------------------
-ORACLE     |Oracle.ManagedDataAccess.Core  |host[ [:service_name]&nbsp;\|&nbsp;[:port:service_name] ]<br>Examples:<br>- *localhost:LEVEL2*<br>- *localhost:1521:LEVEL2*        
+ORACLE     |Oracle.ManagedDataAccess.Core  |host[ [:service_name]&nbsp;\|&nbsp;[:port:service_name] ]<br>Examples:<br>- *localhost:MYDB*<br>- *localhost:1521:LEVEL2*        
 SQLServer  |System.Data.SqlClient          |host[:database_name]<br>Examples:<br>- *localhost*<br>- *localhost:LEVEL2*
-PostgreSQL |Npgsql                         |host[ [:service_name]&nbsp;\|&nbsp[:port:service_name] ]<br>Examples:<br>- *localhost*<br>- *localhost:LEVEL2* 
+PostgreSQL |Npgsql                         |host[ [:database_name]&nbsp;\|&nbsp[:port:database_name] ]<br>Examples:<br>- *localhost*<br>- *localhost:MYDB* 
+MySQL      |MySql.Data                     |host[ [:database_name]&nbsp;\|&nbsp[:port:database_name] ]<br>Examples:<br>- *localhost*<br>- *localhost:MYDB* 
 SQLite     |System.Data.SQLite.Core        |[filename]&nbsp;\|&nbsp;:memory:<br>Examples:<br>- *C:\MyDB.db3*<br>- *:memory:*
 ODBC       |System.Data.Odbc               |[ODBC Connection String]<br>Examples:<br>- *Driver={Microsoft Access Driver (\*.mdb, \*.accdb)};DBQ=MyDb.mdb*<br>- *Driver={Microsoft Excel Driver (\*.xls)};DBQ=book1.xls*   
 
