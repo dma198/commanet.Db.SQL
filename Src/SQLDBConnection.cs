@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Data;
@@ -320,72 +321,50 @@ DbType: {DbType}, DbUser: {DbUser}, DbPassword: {DbPassword}, DbConnection: {DbC
             ExecuteReader(SQL, (rd) => {
                 for (int i = 0; i < rd.FieldCount; i++)
                 {
-                    res.Add(rd.GetFieldValue<T>(i));
+                    var typ = typeof(T);
+                    typ = Nullable.GetUnderlyingType(typ) ?? typ;
+                    var v = (T)Convert.ChangeType(rd.GetValue(i), typ,CultureInfo.InvariantCulture);
+                    res.Add(v);
                 }
                 return false;
             }, Parameters);
             return res;
         }
 
-        public int? ReadOneInt(string SQL, params KeyValuePair<string, object>[] Parameters)
+        public T ReadOne<T>(string SQL, params KeyValuePair<string, object>[] Parameters)
         {
-            int? res = null;
+            T res = default;
             ExecuteReader(SQL, (rd) => {
-                if (!rd.IsDBNull(0)) res = rd.GetInt32(0);
+                if (!rd.IsDBNull(0))
+                {
+                    var typ = typeof(T);
+                    typ = Nullable.GetUnderlyingType(typ) ?? typ;
+                    res = (T)Convert.ChangeType(rd.GetValue(0), typ, CultureInfo.InvariantCulture);
+                }
                 return false;
             }, Parameters);
+            #pragma warning disable CS8603 // Possible null reference return.
             return res;
+            #pragma warning restore CS8603 // Possible null reference return.
         }
+
+        public int? ReadOneInt(string SQL, params KeyValuePair<string, object>[] Parameters)        
+            => ReadOne<int?>(SQL,Parameters);        
 
         public long? ReadOneLong(string SQL, params KeyValuePair<string, object>[] Parameters)
-        {
-            long? res = null;
-            ExecuteReader(SQL, (rd) => {
-                if (!rd.IsDBNull(0)) res = rd.GetInt64(0);
-                return false;
-            }, Parameters);
-            return res;
-        }
+            => ReadOne<long?>(SQL, Parameters);
 
         public double? ReadOneDouble(string SQL, params KeyValuePair<string, object>[] Parameters)
-        {
-            double? res = null;
-            ExecuteReader(SQL, (rd) => {
-                if (!rd.IsDBNull(0)) res = rd.GetDouble(0);
-                return false;
-            }, Parameters);
-            return res;
-        }
+            => ReadOne<double?>(SQL, Parameters);
 
         public decimal? ReadOneDecimal(string SQL, params KeyValuePair<string, object>[] Parameters)
-        {
-            decimal? res = null;
-            ExecuteReader(SQL, (rd) => {
-                if (!rd.IsDBNull(0)) res = rd.GetDecimal(0);
-                return false;
-            }, Parameters);
-            return res;
-        }
+            => ReadOne<decimal?>(SQL, Parameters);
 
         public DateTime? ReadOneDateTime(string SQL, params KeyValuePair<string, object>[] Parameters)
-        {
-            DateTime? res = null;
-            ExecuteReader(SQL, (rd) => {
-                if (!rd.IsDBNull(0)) res = rd.GetDateTime(0);
-                return false;
-            }, Parameters);
-            return res;
-        }
+            => ReadOne<DateTime?>(SQL, Parameters);
 
         public string? ReadOneString(string SQL, params KeyValuePair<string, object>[] Parameters)
-        {
-            string? res = null;
-            ExecuteReader(SQL, (rd) => {
-                if (!rd.IsDBNull(0)) res = rd.GetString(0);
-                return false;
-            }, Parameters);
-            return res;
-        }
+            => ReadOne<string?>(SQL, Parameters);
 
         #endregion
 
